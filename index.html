@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Tchow Tchow</title>
+<style>
+  body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 30px;
+    color: #333;
+  }
+  button {
+    padding: 20px 40px;
+    font-size: 24px;
+    background-color: #ff5e5e;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+</style>
+</head>
+<body>
+
+<h1>clique tchow para tchow</h1>
+<button id="tchowBtn">tchow</button>
+
+<audio id="tchowAudio" src="tchow.mp3"></audio>
+
+<script>
+const button = document.getElementById('tchowBtn');
+const audio = document.getElementById('tchowAudio');
+
+button.addEventListener('click', () => {
+  // Reinicia o áudio mesmo que esteja tocando
+  audio.currentTime = 0;
+  audio.play();
+});
+</script>
+
+</body>
+</html>
