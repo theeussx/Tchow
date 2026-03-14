@@ -2,22 +2,25 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Tchow Tchow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tchow Tchow Mobile</title>
 <style>
   body {
-    height: 100vh;
     margin: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
-    background: #f0f0f0;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
     text-align: center;
   }
   h1 {
+    font-size: 2em;
     margin-bottom: 30px;
-    color: #333;
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
   }
   button {
     padding: 20px 40px;
@@ -27,28 +30,43 @@
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: transform 0.1s, background 0.2s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   }
   button:active {
     transform: scale(0.95);
+    background-color: #ff3b3b;
+  }
+  /* Responsividade */
+  @media (max-width: 480px) {
+    h1 { font-size: 1.5em; }
+    button { font-size: 20px; padding: 15px 30px; }
+  }
+  iframe {
+    display: none; /* iframe escondido, só para tocar o som */
   }
 </style>
 </head>
 <body>
 
 <h1>clique tchow para tchow</h1>
-<iframe width="110" height="200" src="https://www.myinstants.com/instant/o-veado-apertou-play-73268/embed/" frameborder="0" scrolling="no"></iframe>
+<button id="tchowBtn">tchow</button>
 
+<!-- iframe do som -->
+<iframe id="soundIframe" width="110" height="200" src="https://www.myinstants.com/instant/o-veado-apertou-play-73268/embed/" frameborder="0" scrolling="no"></iframe>
 
 <script>
 const button = document.getElementById('tchowBtn');
-const audio = document.getElementById('tchowAudio');
+const iframe = document.getElementById('soundIframe');
 
-button.addEventListener('click', () => {
-  // Reinicia o áudio mesmo que esteja tocando
-  audio.currentTime = 0;
-  audio.play();
-});
+// Função para clonar o iframe pra reiniciar o som
+function playIframeSound() {
+  const newIframe = iframe.cloneNode(true); // clona o iframe
+  iframe.parentNode.replaceChild(newIframe, iframe); // substitui o antigo
+}
+
+// Evento do botão
+button.addEventListener('click', playIframeSound);
 </script>
 
 </body>
