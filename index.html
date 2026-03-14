@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tchow Tchow Mobile</title>
+<title>Tchow Tchow Troll</title>
 <style>
   body {
     margin: 0;
@@ -15,6 +15,7 @@
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
     text-align: center;
+    overflow: hidden;
   }
   h1 {
     font-size: 2em;
@@ -32,18 +33,39 @@
     cursor: pointer;
     transition: transform 0.1s, background 0.2s;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 10;
   }
   button:active {
     transform: scale(0.95);
     background-color: #ff3b3b;
   }
-  /* Responsividade */
   @media (max-width: 480px) {
     h1 { font-size: 1.5em; }
     button { font-size: 20px; padding: 15px 30px; }
   }
-  iframe {
-    display: none; /* iframe escondido, só para tocar o som */
+
+  /* Efeito CMD falso */
+  .cmd-fake {
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    background: black;
+    color: #0f0;
+    font-family: monospace;
+    font-size: 16px;
+    padding: 10px;
+    border: 2px solid #0f0;
+    animation: blink 0.1s;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 </style>
 </head>
@@ -52,21 +74,49 @@
 <h1>clique tchow para tchow</h1>
 <button id="tchowBtn">tchow</button>
 
-<!-- iframe do som -->
-<iframe id="soundIframe" width="110" height="200" src="https://www.myinstants.com/instant/o-veado-apertou-play-73268/embed/" frameborder="0" scrolling="no"></iframe>
+<iframe id="soundIframe" width="110" height="200" src="https://www.myinstants.com/instant/o-veado-apertou-play-73268/embed/" frameborder="0" scrolling="no" style="display:none;"></iframe>
 
 <script>
 const button = document.getElementById('tchowBtn');
 const iframe = document.getElementById('soundIframe');
 
-// Função para clonar o iframe pra reiniciar o som
+// Função pra tocar som (clona iframe)
 function playIframeSound() {
-  const newIframe = iframe.cloneNode(true); // clona o iframe
-  iframe.parentNode.replaceChild(newIframe, iframe); // substitui o antigo
+  const newIframe = iframe.cloneNode(true);
+  iframe.parentNode.replaceChild(newIframe, iframe);
+}
+
+// Função pra troll PC
+function trollPC() {
+  const cmd = document.createElement('div');
+  cmd.className = 'cmd-fake';
+  cmd.textContent = 'C:\\Users\\Você> tchow.exe';
+  document.body.appendChild(cmd);
+  setTimeout(() => cmd.remove(), 200); // some rapidinho
+}
+
+// Função pra troll Mobile
+function trollMobile() {
+  const x = Math.random() * 20 - 10;
+  const y = Math.random() * 20 - 10;
+  document.body.style.transform = `translate(${x}px, ${y}px)`;
+  setTimeout(() => document.body.style.transform = '', 100);
+}
+
+// Detecta se é mobile
+function isMobile() {
+  return /Mobi|Android/i.test(navigator.userAgent);
 }
 
 // Evento do botão
-button.addEventListener('click', playIframeSound);
+button.addEventListener('click', () => {
+  playIframeSound();
+  if (isMobile()) {
+    trollMobile();
+  } else {
+    trollPC();
+  }
+});
 </script>
 
 </body>
