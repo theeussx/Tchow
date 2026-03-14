@@ -2,26 +2,22 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tchow Tchow Troll</title>
+<title>Tchow Tchow</title>
 <style>
   body {
-    margin: 0;
     height: 100vh;
+    margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    background: #f0f0f0;
     text-align: center;
-    overflow: hidden;
   }
   h1 {
-    font-size: 2em;
     margin-bottom: 30px;
-    color: #fff;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    color: #333;
   }
   button {
     padding: 20px 40px;
@@ -31,41 +27,10 @@
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.1s, background 0.2s;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    z-index: 10;
+    transition: transform 0.1s;
   }
   button:active {
     transform: scale(0.95);
-    background-color: #ff3b3b;
-  }
-  @media (max-width: 480px) {
-    h1 { font-size: 1.5em; }
-    button { font-size: 20px; padding: 15px 30px; }
-  }
-
-  /* Efeito CMD falso */
-  .cmd-fake {
-    position: absolute;
-    width: 300px;
-    height: 150px;
-    background: black;
-    color: #0f0;
-    font-family: monospace;
-    font-size: 16px;
-    padding: 10px;
-    border: 2px solid #0f0;
-    animation: blink 0.1s;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 20;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
   }
 </style>
 </head>
@@ -74,47 +39,16 @@
 <h1>clique tchow para tchow</h1>
 <button id="tchowBtn">tchow</button>
 
-<iframe width="110" height="200" src="https://www.myinstants.com/instant/pou-estourado-48183/embed/" frameborder="0" scrolling="no"></iframe>
+<audio id="tchowAudio" src="tchow.mp3"></audio>
+
 <script>
 const button = document.getElementById('tchowBtn');
-const iframe = document.getElementById('soundIframe');
+const audio = document.getElementById('tchowAudio');
 
-// Função pra tocar som (clona iframe)
-function playIframeSound() {
-  const newIframe = iframe.cloneNode(true);
-  iframe.parentNode.replaceChild(newIframe, iframe);
-}
-
-// Função pra troll PC
-function trollPC() {
-  const cmd = document.createElement('div');
-  cmd.className = 'cmd-fake';
-  cmd.textContent = 'C:\\Users\\Você> tchow.exe';
-  document.body.appendChild(cmd);
-  setTimeout(() => cmd.remove(), 200); // some rapidinho
-}
-
-// Função pra troll Mobile
-function trollMobile() {
-  const x = Math.random() * 20 - 10;
-  const y = Math.random() * 20 - 10;
-  document.body.style.transform = `translate(${x}px, ${y}px)`;
-  setTimeout(() => document.body.style.transform = '', 100);
-}
-
-// Detecta se é mobile
-function isMobile() {
-  return /Mobi|Android/i.test(navigator.userAgent);
-}
-
-// Evento do botão
 button.addEventListener('click', () => {
-  playIframeSound();
-  if (isMobile()) {
-    trollMobile();
-  } else {
-    trollPC();
-  }
+  // Reinicia o áudio mesmo que esteja tocando
+  audio.currentTime = 0;
+  audio.play();
 });
 </script>
 
